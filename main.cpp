@@ -4,6 +4,8 @@
 #include <vector>
 #include <map>
 #include"mapa.h"
+#include <iterator>
+#include <algorithm>
 
 using std::cout;
 using std::string;
@@ -70,7 +72,7 @@ int main() {
         cout<<i.first<<" "<<i.second<<" krat"<<std::endl;
     }
     auto najviac = std::max_element(slova.begin(),slova.end(),[](auto i, auto j){return i.second<j.second;});
-    cout<<"Najcastejsie je:"<<najviac->first<<" "<<najviac->second<<" krat."
+    cout<<"Najcastejsie je:"<<najviac->first<<" "<<najviac->second<<" krat."<<std::endl;
     //
 
     std::vector<std::pair<string,int>> poctyTried;
@@ -80,5 +82,27 @@ int main() {
     {
         cout<<i.second<<" "<<i.first<<std::endl;
     }
+
+    std::map<string,string>heslo;
+    auto zac=heslo.begin();
+    auto kon=heslo.end();
+    cout<<(((find_if(zac,kon,[](auto i){return isupper(i);}))!=kon)?"velke OK\n":"velke zle\n");
+    cout<<(((find_if(zac,kon,[](auto i){return islower(i);}))!=kon)?"male OK\n":"male zle\n");
+    cout<<(((find_if(zac,kon,[](auto i){return isdigit(i);}))!=kon)?"cislica OK\n":"cislicazle\n");
+    cout<<(((find_if(zac,kon,[](auto i){return i==".";}))!=kon)?"bodka OK\n":"bodka zle\n");
+    cout<<(((find_if(zac,kon,[](auto i){return isspace(i);}))!=kon)?"medzera OK\n":"medzera zle\n");
+
+    cout<<(((std::count_if(zac,kon,[](auto i){return isupper(i);}))>0)?"velke OK\n":"velke zle\n");
+    cout<<(((std::count_if(zac,kon,[](auto i){return islower(i);}))>0)?"male OK\n":"male zle\n");
+    cout<<(((std::count_if(zac,kon,[](auto i){return isdigit(i);}))>0)?"cislica OK\n":"cislicazle\n");
+    cout<<(((std::count_if(zac,kon,[](auto i){return i==".";}))>0)?"bodka OK\n":"bodka zle\n");
+    cout<<(((std::count_if(zac,kon,[](auto i){return isspace(i);}))==0)?"medzera OK\n":"medzera zle\n");
+
+    cout<<(((std::any_of(zac,kon,[](auto i){return isupper(i);})))?"velke OK\n":"velke zle\n");
+    cout<<(((std::any_of(zac,kon,[](auto i){return islower(i);})))?"male OK\n":"male zle\n");
+    cout<<(((std::any_of(zac,kon,[](auto i){return isdigit(i);})))?"cislica OK\n":"cislicazle\n");
+    cout<<(((std::any_of(zac,kon,[](auto i){return i==".";})))?"bodka OK\n":"bodka zle\n");
+    cout<<(((std::none_of(zac,kon,[](auto i){return isspace(i);})))?"medzera OK\n":"medzera zle\n");
+
     return 0;
 }
