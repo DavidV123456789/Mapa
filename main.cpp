@@ -6,6 +6,7 @@
 #include"mapa.h"
 #include <iterator>
 #include <algorithm>
+#include<forward_list>
 
 using std::cout;
 using std::string;
@@ -103,6 +104,15 @@ int main() {
     cout<<(((std::any_of(zac,kon,[](auto i){return isdigit(i);})))?"cislica OK\n":"cislicazle\n");
     cout<<(((std::any_of(zac,kon,[](auto i){return i==".";})))?"bodka OK\n":"bodka zle\n");
     cout<<(((std::none_of(zac,kon,[](auto i){return isspace(i);})))?"medzera OK\n":"medzera zle\n");
+
+    //eratostenovo sito
+    //list ideálny ak budeme meniť pole, počet prvokv, pridávanie, odoberanie atd.//nevýhoda nedá sa indexovať musí prejsť každý prvok na nájdenie daného prvku
+    const int pocet=1000000;
+    std::forward_list<int>cisla;
+    int i=pocet+1;
+    std::generate_n(std::front_inserter(cisla),pocet-1,[&i](){return i--;});//[i]-lebo ju zachycujeme//&-lebo ju aj meníme
+    for(auto i:cisla){std::cout<<i<<" ";}
+    cout<<std::endl;
 
     return 0;
 }
