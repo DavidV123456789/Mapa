@@ -1,20 +1,21 @@
 #include <iostream>
 #include <fstream>
-#include <string.h>
+#include <cstring>
 #include <vector>
 #include <map>
-#include"mapa.h"
+#include "mapa.h"
 #include <iterator>
 #include <algorithm>
-#include<forward_list>
+#include <forward_list>
 
 using std::cout;
 using std::string;
 using std::make_pair;
 using std::pair;
-
+using std::iterator;
 
 int main() {
+    /*
     //std::cout << "Hello, World!" << std::endl;
     std::map<string,string> nazvyMesiace;
     std::map<string,std::pair<int,int>>dniMesiace;
@@ -83,7 +84,9 @@ int main() {
     {
         cout<<i.second<<" "<<i.first<<std::endl;
     }
-
+     */
+    //kontrola chýb v hesle
+/*
     std::map<string,string>heslo;
     auto zac=heslo.begin();
     auto kon=heslo.end();
@@ -104,15 +107,65 @@ int main() {
     cout<<(((std::any_of(zac,kon,[](auto i){return isdigit(i);})))?"cislica OK\n":"cislicazle\n");
     cout<<(((std::any_of(zac,kon,[](auto i){return i==".";})))?"bodka OK\n":"bodka zle\n");
     cout<<(((std::none_of(zac,kon,[](auto i){return isspace(i);})))?"medzera OK\n":"medzera zle\n");
-
+*/
+/*
     //eratostenovo sito
     //list ideálny ak budeme meniť pole, počet prvokv, pridávanie, odoberanie atd.//nevýhoda nedá sa indexovať musí prejsť každý prvok na nájdenie daného prvku
-    const int pocet=1000000;
+    const int pocet=100000;
     std::forward_list<int>cisla;
     int i=pocet+1;
     std::generate_n(std::front_inserter(cisla),pocet-1,[&i](){return i--;});//[i]-lebo ju zachycujeme//&-lebo ju aj meníme
+
+
+    i=2;
+    int z=2;
+    while(i*i<=pocet)
+    {
+        while(z*i<=pocet)
+        {
+            cisla.remove(z*i);
+            z++;
+        }
+        i++;
+        z=2;
+    }
+    i=pocet;
     for(auto i:cisla){std::cout<<i<<" ";}
     cout<<std::endl;
+    */
+    //nacitajte vetu zistite mnozstvo znakov
+    /*char r[100]; //={"Jedna, dva, tri, neviem co styri..."};
+    fgets(r,100,stdin);
+    int d = strlen(r);
+    int i,m;
+    m=0;
+    char z;
+    //std::cin>>z;
+    for(z=97;z<123;z++)
+    {
+        for (i = 0; i < d; i++) {
+            if (toupper(r[i]) == (toupper(z))) {
+                m++;
+            }
 
+        }
+        cout << "Pocet znakov " << z << ": " << m << std::endl;
+        m=0;
+    }*/
+    std::map<char,int>pismena;
+    string veta="Jedna, dva, tri, neviem co styri";
+    for(auto i:veta)
+    {
+        ++pismena[tolower(i)];
+    }
+    std::vector<std::pair<char,int>>pocty;
+    std::copy(pismena.begin(),pismena.end(),std::back_inserter(pocty));
+    std::sort(pocty.begin(),pocty.end(),[](auto i, auto j){return  i.second<j.second;});
+    for(auto  i:pocty)
+    {
+        cout<<i.first<<" "<<i.second<<" krat"<<std::endl;
+    }
+    auto najviac=std::max_element(pismena.begin(),pismena.end(),[](auto i, auto j){return i.second<j.second;});
+    cout<<"Najcastejsie je: "<<najviac->first<<" "<<najviac->second<<" krat.";
     return 0;
 }
