@@ -169,3 +169,4 @@ int main() {
     cout<<"Najcastejsie je: "<<najviac->first<<" "<<najviac->second<<" krat.";
     return 0;
 }
+//pri objekte prikaz ,,virtual ... =0,, tak nútime vščetky podtriedy ju prepísať, zatiaľ čo nemôýe byť vytvorená v rodičovskej triede
